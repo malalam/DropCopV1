@@ -108,9 +108,9 @@ public class HTTPRequestSerializer: NSObject {
         if isURIParam(method) {
             var para = (request.URL!.query != nil) ? "&" : "?"
             var newUrl = "\(request.URL!.absoluteString!)"
-            /*if count(queryString) > 0 {
+            if !(queryString.isEmpty) {
                 newUrl += "\(para)\(queryString)"
-            }*/
+            }
             request.URL = NSURL(string: newUrl)
         } else {
             var charset = CFStringConvertEncodingToIANACharSetName(CFStringConvertNSStringEncodingToEncoding(self.stringEncoding));

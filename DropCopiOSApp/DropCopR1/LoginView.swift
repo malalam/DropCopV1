@@ -10,6 +10,10 @@ import UIKit
 import SwiftHTTP
 import Foundation
 
+struct someVariables{
+    static var IP_ADDR_PORT:String = "http://192.168.56.100:9090"
+}
+
 class LoginView: UIViewController, UITextFieldDelegate, NSURLConnectionDelegate {
     // story board items
     @IBOutlet weak var welcomeLabel: UILabel!
@@ -17,6 +21,11 @@ class LoginView: UIViewController, UITextFieldDelegate, NSURLConnectionDelegate 
     @IBOutlet weak var usernameField: UITextField!
     
     @IBOutlet weak var passwordField: UITextField!
+    
+    @IBOutlet var loginResponseLabel: UILabel!
+    
+    //is UIAlert already showing
+    var alertShowing: Bool = false
     
     // resign keyboard when clicked blank space
     override func touchesBegan(touches: NSSet, withEvent event: UIEvent) {
@@ -29,112 +38,86 @@ class LoginView: UIViewController, UITextFieldDelegate, NSURLConnectionDelegate 
         return false
     }
     
-    //LOGIN BUTTON
+    //LOGIN BUTTON - verify login credentials
     @IBAction func loginButton(sender: AnyObject) {
-        //Verify login credentials
+        //alert has been dismissed
+        self.alertShowing = false
+        
+        self.view.endEditing(true) //end editing
         
         // Text Field information
-        let usr = usernameField.text
+        let usr = usernameField.text.lowercaseString
         let pss = passwordField.text
-
+        
+        // User left a field empty
         if( usernameField.text.isEmpty || passwordField.text.isEmpty){
-            loginResponseLabel.text = "Please don't leave any fields blank!"
-            loginResponseLabel.textColor = UIColor.blueColor()
-            usernameField.resignFirstResponder()
-            passwordField.resignFirstResponder()
+            showAlertDispatch("Empty Field", alertMessage: "Don't leave any fields blank!")
             return
         }
+        // Send GET request to server to verify login credentials
         else{
-            // HTTP GET REQUEST FOR LOGIN
             var error: NSError?
             var request = HTTPTask()
-            request.requestSerializer = HTTPRequestSerializer()
-            
-            request.GET("http://192.168.1.19:9090/login?"+"username="+usr+"&password="+pss, parameters: nil, success: {(response: HTTPResponse) in
+            request.requestSerializer = HTTPRequestSerializer()   // Serializes request as standard HTTP - default
+            request.responseSerializer = JSONResponseSerializer() // Serializes response as JSON
+            let params: Dictionary<String,AnyObject> = ["username": usr, "password": pss]
+            request.GET((someVariables.IP_ADDR_PORT+"/login"), parameters: params, success: {(response: HTTPResponse) in
+                println("response: \(response.responseObject!)")
                 if response.responseObject != nil {
                     println("Request: \(request)")
-                    // Printing just the string values
-                    let str = NSString(data: response.responseObject as NSData, encoding: NSUTF8StringEncoding)
-                    println("Got response : \(str)")
-                    //if wanting to print substring
-                    //var substr = str?.substringToIndex(6)
-                    //println("response:substr: \(substr)")
-                    println("Response Object: \(response.responseObject)")
-                    println("Response text: \(response.text())")
-                    // Parsing JSON data
-                    // variable holding if login verified
-                    var loginVerifyData: String
-                    let data = response.responseObject as? NSData
-                    var rsp: AnyObject? = NSJSONSerialization.JSONObjectWithData(data!, options: nil, error: &error)
-                    if let logindict = rsp as? NSDictionary{
-                        loginVerifyData = logindict["login"] as String
+                    // Parsing JSON response data - login: true indicates successful login
+                    if let logindict = response.responseObject as? NSDictionary{
+                        
+                        //find login data
+                        var loginVerifyData = logindict["login"] as String
                         println("THIS IS LOGIN: \(loginVerifyData)")
-                        //Login code 3 is successful credentials
-                        if(loginVerifyData == "3"){
-                            self.loginResponseLabel?.text = "Hello"
-                            dispatch_async(dispatch_get_main_queue(), {
-                                self.usernameField.resignFirstResponder()
-                                self.passwordField.resignFirstResponder()
-                            });
+                        
+                        //Login pass
+                        if(loginVerifyData == "true"){
+                            //SEGUE TO MAIN VIEW
+                            //self.showAlertDispatch("HELLO!", alertMessage: "Welcome to DropCop")
+                            self.performSegueWithIdentifier("mainView", sender: self)
                         }
+                        //Password fail
+                        else if(loginVerifyData == "pfalse"){
+                            self.showAlertDispatch("Password failed", alertMessage: "Try Again")
+                        }
+                        //Login credentials did not match
                         else{
-                            // MUST DISPATCH TO MAIN THREAD IN ORDER TO EXECUTE - LOGIN FAILED
-                            dispatch_async(dispatch_get_main_queue(), {
-                                let alertController = UIAlertController(title: "Login Failed", message: "Try Again", preferredStyle:UIAlertControllerStyle.Alert)
-                                alertController.addAction(UIAlertAction(title: "Dismiss", style: UIAlertActionStyle.Default, handler: nil))
-                                self.presentViewController(alertController, animated: true, completion: nil)
-                                });
+                            self.showAlertDispatch("Login Unsuccessful", alertMessage: "User not found. Register!")
                         }
                     }
                 }
-                },
-                failure: {(error:NSError, response: HTTPResponse?)in println("got and error: \(error)")
-                        // MUST DISPATCH TO MAIN THREAD IN ORDER TO EXECUTE - LOGIN FAILED
-                        dispatch_async(dispatch_get_main_queue(), {
-                            let alertController = UIAlertController(title: "Login Failed", message: "Try Again", preferredStyle:UIAlertControllerStyle.Alert)
-                            alertController.addAction(UIAlertAction(title: "Dismiss", style: UIAlertActionStyle.Default, handler: nil))
-                            self.presentViewController(alertController, animated: true, completion: nil)
-                        });
-                    
-                } // end of failure statement
+                }, // end of success parameter
+                //Login response error
+                failure: {(error:NSError, response: HTTPResponse?)in println("got an error: \(error)")
+                    self.showAlertDispatch("Server Error", alertMessage:"Try Again later")
+                }
             )// end of http get field
         }
         
     }
-
-
     
-        /*
-        //username & password correct
-        if usernameField?.text.lowercaseString == usr.lowercaseString && passwordField?.text == pw {
-            loginResponseLabel.text = "Hello " + usr + " !"
-            loginResponseLabel.textColor = UIColor.yellowColor()
-            usernameField.resignFirstResponder()
-            passwordField.resignFirstResponder()
-        }
-            // incorrect login
-        else {
-            loginResponseLabel.text = "Incorrect Login!"
-            loginResponseLabel.textColor = UIColor.redColor()
-            usernameField.resignFirstResponder()
-            passwordField.resignFirstResponder()
-        }
-        */
+    //Segue back to this page (Used on Registration page Cancel button)
+    @IBAction func unwindToMainMenu(sender: UIStoryboardSegue){ }
     
-    
-    
-    @IBOutlet var loginResponseLabel: UILabel!
-    
-    //REGISTER BUTTON - transitions to registration page
-    //implemented using custom segue
-    
-    //Cancel button - transitions back to login page
-    @IBAction func unwindToMainMenu(sender: UIStoryboardSegue)
-    {
+    //Dispatches to main thread to show a UIAlert
+    func showAlertDispatch(alertTitle:String, alertMessage:String){
+        dispatch_async(dispatch_get_main_queue(), {
+            if(!self.alertShowing){
+                let alertController = UIAlertController(title: alertTitle, message: alertMessage, preferredStyle:UIAlertControllerStyle.Alert)
+                alertController.addAction(UIAlertAction(title: "Dismiss", style: UIAlertActionStyle.Default, handler: nil))
+                self.presentViewController(alertController, animated: true, completion: nil)
+                self.alertShowing = true
+            }
+            else {
+                self.alertShowing = false
+            }
+        })
     }
     
     
-    //++++++++++++++++++++++++++++++++++++++++++++++++++++
+    /*++++++++++++++++++++++++++++++++++++++++++++++++++++*/
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -147,11 +130,3 @@ class LoginView: UIViewController, UITextFieldDelegate, NSURLConnectionDelegate 
     }
 
 }
-
-/*
-things to do
-- connect to data base and load up usernames and password
-- interface usernames and passwords to check what the user enters
-- if login verified, go to first page
-
-*/

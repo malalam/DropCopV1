@@ -10,29 +10,29 @@
 	<string>DropCopR1</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
-		<key>F475E128D8B32142BFBD9267B70679225063B246</key>
-		<string>https://github.com/mosiris/DropCopV1.git</string>
+		<key>6E0BC4E4FC765EA8532A59F87176FC20D651CD2B</key>
+		<string>https://github.com/mosiris/DropCopV1</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
-	<string>DropCopR1.xcworkspace</string>
+	<string>DropCopiOSApp/DropCopR1.xcworkspace</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
-		<key>F475E128D8B32142BFBD9267B70679225063B246</key>
-		<string>..</string>
+		<key>6E0BC4E4FC765EA8532A59F87176FC20D651CD2B</key>
+		<string>../..</string>
 	</dict>
 	<key>IDESourceControlProjectURL</key>
-	<string>https://github.com/mosiris/DropCopV1.git</string>
+	<string>https://github.com/mosiris/DropCopV1</string>
 	<key>IDESourceControlProjectVersion</key>
 	<integer>111</integer>
 	<key>IDESourceControlProjectWCCIdentifier</key>
-	<string>F475E128D8B32142BFBD9267B70679225063B246</string>
+	<string>6E0BC4E4FC765EA8532A59F87176FC20D651CD2B</string>
 	<key>IDESourceControlProjectWCConfigurations</key>
 	<array>
 		<dict>
 			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
 			<string>public.vcs.git</string>
 			<key>IDESourceControlWCCIdentifierKey</key>
-			<string>F475E128D8B32142BFBD9267B70679225063B246</string>
+			<string>6E0BC4E4FC765EA8532A59F87176FC20D651CD2B</string>
 			<key>IDESourceControlWCCName</key>
 			<string>DropCopR1</string>
 		</dict>

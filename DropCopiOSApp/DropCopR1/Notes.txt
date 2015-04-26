@@ -1,0 +1,55 @@
+LoginView:
+
+//username & password correct
+if usernameField?.text.lowercaseString == usr.lowercaseString && passwordField?.text == pw {
+loginResponseLabel.text = "Hello " + usr + " !"
+loginResponseLabel.textColor = UIColor.yellowColor()
+usernameField.resignFirstResponder()
+passwordField.resignFirstResponder()
+}
+
+// incorrect login
+else {
+loginResponseLabel.text = "Incorrect Login!"
+loginResponseLabel.textColor = UIColor.redColor()
+usernameField.resignFirstResponder()
+passwordField.resignFirstResponder()
+}
+
+
+//if wanting to print substring
+//var substr = str?.substringToIndex(6)
+//println("response:substr: \(substr)")
+
+
+// Printing just the string values
+let str = NSString(data: response.responseObject as NSData, encoding: NSUTF8StringEncoding)
+println("Got response : \(str)")
+
+//print the response object
+println("Response Object: \(response.responseObject)")
+
+//print response text
+println("Response text: \(response.text())")
+
+/* SERIALIZE JSON */
+// Serializing response & Parsing JSON data - login: 3 indicates successful login
+var loginVerifyData: String
+//let data = response.responseObject as? NSData
+//var rsp: AnyObject? = NSJSONSerialization.JSONObjectWithData(data!, options: nil, error: &error)
+//if let logindict = rsp as? NSDictionary{
+if let logindict = response.responseObject as? NSDictionary{
+
+//find login data
+loginVerifyData = logindict["login"] as String
+println("THIS IS LOGIN: \(loginVerifyData)")
+
+//Login code 3 is successful credentials
+if(loginVerifyData == "3"){
+self.loginResponseLabel?.text = "Hello" // replace with segue to main
+self.resignResponders()
+}
+//Login credentials did not match
+else{
+self.showAlertDispatch("Login Unsuccessful")
+}
