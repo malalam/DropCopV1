@@ -31,7 +31,7 @@ class CopView: UITableViewController{
                 var regData:String = ""
                 //parse response
                 if let reg = response.responseObject as? NSArray{
-                    //println("This is the Array of Records \(reg)")
+                    
                     // try to fill array
                     for items in reg{
                         if let arrData = items as? NSDictionary{
@@ -72,6 +72,9 @@ class CopView: UITableViewController{
         }
     }
     
+
+    
+    
     //Segue back to this page (Used on Registration page Cancel button)
     @IBAction func unwindToCopView(sender: UIStoryboardSegue){ }
     
@@ -92,9 +95,10 @@ class CopView: UITableViewController{
         
     }
     
-    override func viewDidAppear(animated: Bool) {
+    override func viewWillAppear(animated: Bool) {
         //cop.removeAll(keepCapacity: false)
-        shouldIncrement()
+        println("VIEW WILL APPEAR")
+        self.shouldIncrement()
         //dispatch_async(dispatch_get_main_queue(), {self.copLoader()})
     }
     
@@ -127,19 +131,22 @@ class CopView: UITableViewController{
         cell.itemName.text = currentItem.name
         cell.itemPrice.text = "$" + currentItem.price
         // Download image and put it into image view
+        println("DELAY")
         if let url = NSURL(string: currentItem.pic){
+            println("loading element")
             if let data = NSData(contentsOfURL: url){
                 cell.itemImage.image = UIImage(data: data)
             }
         }
         return cell
     }
-    @IBAction func refreshButton(sender: AnyObject) {
+    
+    @IBAction func refresheree(sender: AnyObject) {
         cop.removeAll(keepCapacity: false)
         dispatch_async(dispatch_get_main_queue(), {self.copLoader()})
         println("Data has been refreshed")
     }
-   
+    
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         // Get the new view controller using segue.destinationViewController.
         if(segue.identifier == "itemviewer"){

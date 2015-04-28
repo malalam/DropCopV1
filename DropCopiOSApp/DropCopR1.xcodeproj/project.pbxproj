@@ -20,6 +20,7 @@
 		508AF1631AE438FE00701ECC /* CopView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 508AF1621AE438FE00701ECC /* CopView.swift */; };
 		508AF1651AE43D7C00701ECC /* copCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 508AF1641AE43D7C00701ECC /* copCell.swift */; };
 		50AF5E021AEF26A500779696 /* CopPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50AF5E011AEF26A500779696 /* CopPage.swift */; };
+		50D976E21AF01D55000A30BB /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 50D976E01AF01D55000A30BB /* Main.storyboard */; };
 		A0C0EB2ABDF1F3A92F7029F5 /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ED4FDAF756E36C819969E59C /* Pods.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 /* End PBXBuildFile section */
 
@@ -51,6 +52,7 @@
 		508AF1621AE438FE00701ECC /* CopView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CopView.swift; sourceTree = "<group>"; };
 		508AF1641AE43D7C00701ECC /* copCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = copCell.swift; sourceTree = "<group>"; };
 		50AF5E011AEF26A500779696 /* CopPage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CopPage.swift; sourceTree = "<group>"; };
+		50D976E11AF01D55000A30BB /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		6F4DED551EB05FB045EB4E1B /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		ED4FDAF756E36C819969E59C /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		EE0A8BF01214B25B644D0E0B /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
@@ -108,6 +110,7 @@
 		5022DFE71ACF4537008A2364 /* DropCopR1 */ = {
 			isa = PBXGroup;
 			children = (
+				50D976E01AF01D55000A30BB /* Main.storyboard */,
 				5022DFEA1ACF4537008A2364 /* AppDelegate.swift */,
 				5022DFF11ACF4537008A2364 /* Images.xcassets */,
 				5022DFF31ACF4537008A2364 /* LaunchScreen.xib */,
@@ -242,6 +245,7 @@
 			files = (
 				5022DFF51ACF4537008A2364 /* LaunchScreen.xib in Resources */,
 				504AF9411AD9A6160083C243 /* Podfile in Resources */,
+				50D976E21AF01D55000A30BB /* Main.storyboard in Resources */,
 				5022DFF21ACF4537008A2364 /* Images.xcassets in Resources */,
 				502FE01F1ADDA9DE00342CC8 /* Notes.txt in Resources */,
 			);
@@ -345,6 +349,14 @@
 				5022DFF41ACF4537008A2364 /* Base */,
 			);
 			name = LaunchScreen.xib;
+			sourceTree = "<group>";
+		};
+		50D976E01AF01D55000A30BB /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				50D976E11AF01D55000A30BB /* Base */,
+			);
+			name = Main.storyboard;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
