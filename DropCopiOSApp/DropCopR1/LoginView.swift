@@ -116,7 +116,7 @@ class LoginView: UIViewController, UITextFieldDelegate, NSURLConnectionDelegate 
         })
     }
     
-    
+   
     /*++++++++++++++++++++++++++++++++++++++++++++++++++++*/
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -128,5 +128,15 @@ class LoginView: UIViewController, UITextFieldDelegate, NSURLConnectionDelegate 
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+    
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        // Get the new view controller using segue.destinationViewController.
+        if(segue.identifier == "mainView"){
+            let nextScene = segue.destinationViewController as UINavigationController
+            let actualScene = nextScene.viewControllers.first as CopView
+            actualScene.currentUser = self.usernameField?.text
+        }
+    }
+    
 
 }

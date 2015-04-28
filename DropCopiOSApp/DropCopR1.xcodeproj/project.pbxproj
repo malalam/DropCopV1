@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		5022DFEB1ACF4537008A2364 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5022DFEA1ACF4537008A2364 /* AppDelegate.swift */; };
-		5022DFF01ACF4537008A2364 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5022DFEE1ACF4537008A2364 /* Main.storyboard */; };
 		5022DFF21ACF4537008A2364 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5022DFF11ACF4537008A2364 /* Images.xcassets */; };
 		5022DFF51ACF4537008A2364 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5022DFF31ACF4537008A2364 /* LaunchScreen.xib */; };
 		5022E0011ACF4537008A2364 /* DropCopR1Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5022E0001ACF4537008A2364 /* DropCopR1Tests.swift */; };
@@ -20,7 +19,7 @@
 		508AF15F1AE4368400701ECC /* CopItems.swift in Sources */ = {isa = PBXBuildFile; fileRef = 508AF15E1AE4368400701ECC /* CopItems.swift */; };
 		508AF1631AE438FE00701ECC /* CopView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 508AF1621AE438FE00701ECC /* CopView.swift */; };
 		508AF1651AE43D7C00701ECC /* copCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 508AF1641AE43D7C00701ECC /* copCell.swift */; };
-		50DE3FD81AE2F8D20093AC20 /* testView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50DE3FD71AE2F8D20093AC20 /* testView.swift */; };
+		50AF5E021AEF26A500779696 /* CopPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50AF5E011AEF26A500779696 /* CopPage.swift */; };
 		A0C0EB2ABDF1F3A92F7029F5 /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ED4FDAF756E36C819969E59C /* Pods.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 /* End PBXBuildFile section */
 
@@ -38,7 +37,6 @@
 		5022DFE51ACF4537008A2364 /* DropCopR1.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DropCopR1.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5022DFE91ACF4537008A2364 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5022DFEA1ACF4537008A2364 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		5022DFEF1ACF4537008A2364 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		5022DFF11ACF4537008A2364 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		5022DFF41ACF4537008A2364 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 		5022DFFA1ACF4537008A2364 /* DropCopR1Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DropCopR1Tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -52,7 +50,7 @@
 		508AF15E1AE4368400701ECC /* CopItems.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CopItems.swift; sourceTree = "<group>"; };
 		508AF1621AE438FE00701ECC /* CopView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CopView.swift; sourceTree = "<group>"; };
 		508AF1641AE43D7C00701ECC /* copCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = copCell.swift; sourceTree = "<group>"; };
-		50DE3FD71AE2F8D20093AC20 /* testView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = testView.swift; path = ../testView.swift; sourceTree = "<group>"; };
+		50AF5E011AEF26A500779696 /* CopPage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CopPage.swift; sourceTree = "<group>"; };
 		6F4DED551EB05FB045EB4E1B /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		ED4FDAF756E36C819969E59C /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		EE0A8BF01214B25B644D0E0B /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
@@ -111,17 +109,16 @@
 			isa = PBXGroup;
 			children = (
 				5022DFEA1ACF4537008A2364 /* AppDelegate.swift */,
-				5022DFEE1ACF4537008A2364 /* Main.storyboard */,
 				5022DFF11ACF4537008A2364 /* Images.xcassets */,
 				5022DFF31ACF4537008A2364 /* LaunchScreen.xib */,
 				5022DFE81ACF4537008A2364 /* Supporting Files */,
 				5022E00A1ACF45CE008A2364 /* LoginView.swift */,
 				50681F5B1AD0AD260029F0AE /* RegistrationView.swift */,
-				50DE3FD71AE2F8D20093AC20 /* testView.swift */,
 				508AF1621AE438FE00701ECC /* CopView.swift */,
 				508AF1641AE43D7C00701ECC /* copCell.swift */,
 				508AF15E1AE4368400701ECC /* CopItems.swift */,
 				506F48BA1AED7EB400517B4C /* itemView.swift */,
+				50AF5E011AEF26A500779696 /* CopPage.swift */,
 				502FE01E1ADDA9DE00342CC8 /* Notes.txt */,
 			);
 			path = DropCopR1;
@@ -243,7 +240,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5022DFF01ACF4537008A2364 /* Main.storyboard in Resources */,
 				5022DFF51ACF4537008A2364 /* LaunchScreen.xib in Resources */,
 				504AF9411AD9A6160083C243 /* Podfile in Resources */,
 				5022DFF21ACF4537008A2364 /* Images.xcassets in Resources */,
@@ -313,7 +309,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				50DE3FD81AE2F8D20093AC20 /* testView.swift in Sources */,
 				508AF1651AE43D7C00701ECC /* copCell.swift in Sources */,
 				50681F5C1AD0AD260029F0AE /* RegistrationView.swift in Sources */,
 				506F48BB1AED7EB400517B4C /* itemView.swift in Sources */,
@@ -321,6 +316,7 @@
 				508AF1631AE438FE00701ECC /* CopView.swift in Sources */,
 				5022E00B1ACF45CE008A2364 /* LoginView.swift in Sources */,
 				5022DFEB1ACF4537008A2364 /* AppDelegate.swift in Sources */,
+				50AF5E021AEF26A500779696 /* CopPage.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -343,14 +339,6 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
-		5022DFEE1ACF4537008A2364 /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				5022DFEF1ACF4537008A2364 /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
 		5022DFF31ACF4537008A2364 /* LaunchScreen.xib */ = {
 			isa = PBXVariantGroup;
 			children = (

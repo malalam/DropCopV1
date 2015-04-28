@@ -78,10 +78,14 @@ class RegistrationView: UIViewController, UITextFieldDelegate {
                     }
                     //check update
                     if( regData == "true" ){
-                        self.showAlertDispatch("Congratulations!", alertMessage: "You can now login")
-                        if !(self.alertShowing){
-                            //segue to login page
-                        }
+                        //self.showAlertDispatch("Congratulations!", alertMessage: "You can now login")
+                        let alertController = UIAlertController(title: "Congratulations!", message: "You can now login!", preferredStyle:UIAlertControllerStyle.Alert)
+                        alertController.addAction(UIAlertAction(title: "Dismiss", style: UIAlertActionStyle.Default){ (action) in
+                            self.dismissViewControllerAnimated(true, completion: nil)
+                            })
+                        self.presentViewController(alertController, animated: true, completion: nil)
+
+                        
                     }
                     else{
                         self.showAlertDispatch("Sorry... but", alertMessage: "Username or Email already registered.")

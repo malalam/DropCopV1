@@ -10,12 +10,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "DropCopR1/CopView.swift"
-            timestampString = "451241975.36359"
+            timestampString = "451903264.796887"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "23"
-            endingLineNumber = "23"
-            landmarkName = "viewDidLoad()"
+            startingLineNumber = "22"
+            endingLineNumber = "22"
+            landmarkName = "copLoader()"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
