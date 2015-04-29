@@ -82,7 +82,7 @@ class itemView: UIViewController {
     }
     
     func buttonConf(){
-        copButton.layer.backgroundColor = UIColor.lightGrayColor().CGColor
+        copButton.layer.backgroundColor = UIColor.lightTextColor().CGColor
         copButton.layer.borderColor = UIColor.blackColor().CGColor
         copButton.layer.borderWidth = 0.5
     }

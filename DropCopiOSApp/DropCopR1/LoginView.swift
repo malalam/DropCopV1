@@ -99,7 +99,7 @@ class LoginView: UIViewController, UITextFieldDelegate, NSURLConnectionDelegate 
     }
     
     //Segue back to this page (Used on Registration page Cancel button)
-    @IBAction func unwindToMainMenu(sender: UIStoryboardSegue){ }
+    @IBAction func unwindToLogin(sender: UIStoryboardSegue){ }
     
     //Dispatches to main thread to show a UIAlert
     func showAlertDispatch(alertTitle:String, alertMessage:String){
@@ -132,9 +132,8 @@ class LoginView: UIViewController, UITextFieldDelegate, NSURLConnectionDelegate 
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         // Get the new view controller using segue.destinationViewController.
         if(segue.identifier == "mainView"){
-            let nextScene = segue.destinationViewController as UINavigationController
-            let actualScene = nextScene.viewControllers.first as CopView
-            actualScene.currentUser = self.usernameField?.text
+            let menuScene = segue.destinationViewController as mainmenu
+            menuScene.crrUser = self.usernameField?.text
         }
     }
     
