@@ -45,6 +45,7 @@ class OrdersView: UIViewController, UITableViewDataSource, UITableViewDelegate {
                             oI.name = arrData["name"] as String
                             oI.orderID = arrData["oid"] as String
                             self.order.append(oI)
+                        
                         }
                     }
                 }

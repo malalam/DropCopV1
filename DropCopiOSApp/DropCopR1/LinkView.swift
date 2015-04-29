@@ -15,16 +15,30 @@ class LinkView: UIViewController {
     @IBOutlet weak var linkWeb: UIWebView!
     
     func loadAddressURL(){
-        let requesturl = NSURL(string: link!)
-        if (requesturl != nil){
-            let request = NSURLRequest(URL: requesturl!)
-            linkWeb.loadRequest(request)
+        if(link != nil){
+            if(link?.hasPrefix("http://") == true){
+                let requesturl = NSURL(string: link!)
+                let request = NSURLRequest(URL: requesturl!)
+                self.linkWeb.loadRequest(request)
+            }
+            else if (link?.hasPrefix("www") == true ){
+                let link2  = "http://" + link!
+                let requesturl = NSURL(string: link2)
+                let request = NSURLRequest(URL: requesturl!)
+                self.linkWeb.loadRequest(request)
+            }
+            else{
+                let link3  = "http://www" + link!
+                let requesturl = NSURL(string: link3)
+                let request = NSURLRequest(URL: requesturl!)
+                self.linkWeb.loadRequest(request)
+            }
         }
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        loadAddressURL()
+        dispatch_async(dispatch_get_main_queue(), { self.loadAddressURL() })
         // Do any additional setup after loading the view.
     }
 
