@@ -1,6 +1,6 @@
 /* 
  * File:   main.cpp
- * Author: mo
+ * Author: Team B12
  *
  * Created on April 10, 2015, 2:46 AM
  */
@@ -15,7 +15,9 @@
 #include <Poco/Net/HTTPServerResponse.h>
 #include <Poco/Net/HTMLForm.h>
 #include <Poco/Util/ServerApplication.h>
+#include <Poco/Net/FilePartSource.h>
 #include <iostream>
+#include <fstream>
 #include <pqxx/pqxx>
 #include <string>
 #include <sstream>
@@ -225,23 +227,435 @@ public:
 private:    
 };
 
+class BuyHandler: public HTTPRequestHandler{
+public:
+    virtual void handleRequest(HTTPServerRequest &req, HTTPServerResponse &resp ){
+        // response header
+        resp.set("Access-Control-Allow-Origin", "*");
+        resp.setStatus(HTTPResponse::HTTP_OK);
+        resp.setContentType("text/json");
+        // open stream to write response
+        ostream& out = resp.send();
+        HTMLForm form(req);
+        
+        try{
+            connection C("dbname=DropCop user=mo password=cop hostaddr=127.0.0.1 port=5432");
+            if (C.is_open()) {
+                cout << "Opened database successfully: " << C.dbname() << endl;
+            } 
+            else {
+                cout << "Can't open database" << endl;
+                out.flush();
+                return;
+            }
+            /* Create SQL statement */
+            string sql = "SELECT * from cop";
+            /* Create a non-transactional object. */
+            nontransaction N(C);
+            /* Execute SQL query */
+            result R( N.exec( sql ));
+            cout << "RCAP: " << R.capacity() << endl;
+            /* List down all the records */
+            out << "[";
+            for (result::const_iterator c = R.begin(); c != R.end(); ++c) {
+            //result::const_iterator c = R.begin();
+                //send item data 
+                out << "{\"name\":\"" + c[1].as<string>() + "\","
+                + "\"price\":\"" + c[2].as<string>() + "\","
+                + "\"details\":\"" + c[3].as<string>() + "\","
+                + "\"count\":\"" + c[4].as<string>() + "\","
+                + "\"currCount\":\"" + c[6].as<string>() + "\","
+                + "\"pic\":\"" + c[5].as<string>() + "\"}";
+                
+                if(c != --R.end()){
+                    out << ",";
+                }
+            }
+            out << "]";
+            out.flush();
+            cout << "Buy Data sent successfully" << endl;
+            C.disconnect();
+            return;
+        }
+        catch(const std::exception &e){
+            //wrong something is not found -- wrong data request 
+            cerr << e.what() << std::endl;
+            out << "{\"Buy\":\"error\"}";
+            cout << "Buy Exception" << endl;
+            out.flush();
+            return;
+        }
+        out.flush();
+        cout << "BuyHandler End" << endl;
+        return;
+    }
+private:  
+};
+
+
+class OrderHandler: public HTTPRequestHandler{
+public:
+    virtual void handleRequest(HTTPServerRequest &req, HTTPServerResponse &resp ){
+        // response header
+        resp.set("Access-Control-Allow-Origin", "*");
+        resp.setStatus(HTTPResponse::HTTP_OK);
+        resp.setContentType("text/json");
+        // open stream to write response
+        ostream& out = resp.send();
+        HTMLForm form(req);
+        cout << "HTML FORM DATA " << endl;
+        NameValueCollection::ConstIterator c = form.begin();
+        string name2;
+        string value2;
+        while( c != (form.end()++)){
+            name2 = c-> first;
+            value2 = c->second;
+            cout << name2 << " = " << value2 << endl << flush;
+            ++c;
+        }
+        
+        try{
+            connection C("dbname=DropCop user=mo password=cop hostaddr=127.0.0.1 port=5432");
+            if (C.is_open()) {
+                cout << "Opened database successfully: " << endl;
+            } 
+            else {
+                cout << "Can't open database" << endl;
+                out.flush();
+                return;
+            }
+            
+            /* Create SQL statement */
+            string sql = "SELECT * from cop where name = '" + form["item"]+"';";
+            cout << sql << endl;
+            /* Create a non-transactional object */
+            nontransaction N(C);
+
+            /* Execute SQL query */
+            result R( N.exec(sql));
+            N.commit(); // must release this process
+            // check if item is there
+            cout << "BEFORE HEART" << endl;  
+                /* Create SQL statement */
+                string rsql = "INSERT INTO orders (username,item,sname,address,city,state,zip, phone, bname, cc, sc, exp) VALUES ('" +form["username"]+ "','" +form["item"]+ "','" +form["sname"]+ "','" +form["address"]+"','" +form["city"]+"','" +form["state"]+"'," +form["zip"]+"," +form["phone"]+",'" +form["bname"]+"'," +form["cc"]+"," +form["sn"]+"," +form["exp"]+ ");";
+                cout << rsql << endl;
+                /* Create a transactional object */
+                work W(C);
+
+                /* Execute SQL query */
+                W.exec(rsql);
+                W.commit();
+                cout << "Order Confirmed" << endl;
+                out << "{\"order\":\"true\"}";
+             
+                /* Increment the order count*/
+                string csql = "UPDATE cop SET \"currCount\" = \"currCount\" + 1 where name = '"+ form["item"] + "';";
+                cout << csql << endl;
+                work A(C);
+                A.exec(csql);
+                A.commit();
+                
+            C.disconnect();
+            out.flush();
+        }
+         catch (const std::exception &e){   
+            //wrong something is not found -- wrong data request 
+            cerr << e.what() << std::endl;
+            out << "{\"order\":\"error\"}";
+            cout << "Ordered Exception" << endl;
+            out.flush();
+            return;
+        }
+        out.flush();
+        cout << "OrderHandler END" << endl;
+        return;
+    }
+
+private:    
+};
+
+class DealHandler: public HTTPRequestHandler{
+public:
+    virtual void handleRequest(HTTPServerRequest &req, HTTPServerResponse &resp ){
+        // response header
+        resp.set("Access-Control-Allow-Origin", "*");
+        resp.setStatus(HTTPResponse::HTTP_OK);
+        resp.setContentType("text/json");
+        // open stream to write response
+        ostream& out = resp.send();
+        HTMLForm form(req);
+        
+        try{
+            connection C("dbname=DropCop user=mo password=cop hostaddr=127.0.0.1 port=5432");
+            if (C.is_open()) {
+                cout << "Opened database successfully: " << C.dbname() << endl;
+            } 
+            else {
+                cout << "Can't open database" << endl;
+                out.flush();
+                return;
+            }
+            /* Create SQL statement */
+            string sql = "SELECT * from deals order by id desc";
+            /* Create a non-transactional object. */
+            nontransaction N(C);
+            /* Execute SQL query */
+            result R( N.exec( sql ));
+            cout << "RCAP: " << R.capacity() << endl;
+            /* List down all the records */
+            out << "[";
+            for (result::const_iterator c = R.begin(); c != R.end(); ++c) {
+            //result::const_iterator c = R.begin();
+                //send item data 
+                out << "{\"name\":\"" + c[2].as<string>() + "\","
+                + "\"id\":\"" + c[0].as<string>() + "\","
+                + "\"details\":\"" + c[3].as<string>() + "\","
+                + "\"price\":\"" + c[4].as<string>() + "\","
+                + "\"link\":\"" + c[5].as<string>() + "\","
+                + "\"likes\":\"" + c[6].as<string>() +  "\"}";
+            
+                if(c != --R.end()){
+                    out << ",";
+                }
+            }
+            out << "]";
+            out.flush();
+            cout << "Deal Data sent successfully" << endl;
+            C.disconnect();
+            return;
+        }
+        catch(const std::exception &e){
+            //wrong something is not found -- wrong data request 
+            cerr << e.what() << std::endl;
+            out << "{\"deal\":\"error\"}";
+            cout << "Deal Exception" << endl;
+            out.flush();
+            return;
+        }
+        out.flush();
+        cout << "DealHandler End" << endl;
+        return;
+    }
+private:  
+};
+
+class LikeHandler: public HTTPRequestHandler{
+public:
+    virtual void handleRequest(HTTPServerRequest &req, HTTPServerResponse &resp ){
+        // response header
+        resp.set("Access-Control-Allow-Origin", "*");
+        resp.setStatus(HTTPResponse::HTTP_OK);
+        resp.setContentType("text/json");
+        // open stream to write response
+        ostream& out = resp.send();
+        HTMLForm form(req);
+        try{
+            connection C("dbname=DropCop user=mo password=cop hostaddr=127.0.0.1 port=5432");
+            if (C.is_open()) {
+                cout << "Opened database successfully: " << endl;
+            } 
+            else {
+                cout << "Can't open database" << endl;
+                out.flush();
+                return;
+            }
+            
+            
+                cout << "Like Confirmed" << endl;
+                out << "{\"addedLike\":\"true\"}";
+             
+                /* Increment the order count*/
+                string csql = "UPDATE deals SET \"likes\" = \"likes\" + 1 where id = "+ form["id"] + ";";
+                cout << csql << endl;
+                work A(C);
+                A.exec(csql);
+                A.commit();
+                
+            C.disconnect();
+            out.flush();
+        }
+         catch (const std::exception &e){   
+            //wrong something is not found -- wrong data request 
+            cerr << e.what() << std::endl;
+            out << "{\"addedLike\":\"error\"}";
+            cout << "Like Exception" << endl;
+            out.flush();
+            return;
+        }
+        out.flush();
+        cout << "LikeHandler END" << endl;
+        return;
+    }
+
+private:    
+};
+
+class AddDealHandler: public HTTPRequestHandler{
+public:
+    virtual void handleRequest(HTTPServerRequest &req, HTTPServerResponse &resp ){
+        // response header
+        resp.set("Access-Control-Allow-Origin", "*");
+        resp.setStatus(HTTPResponse::HTTP_OK);
+        resp.setContentType("text/json");
+        // open stream to write response
+        ostream& out = resp.send();
+        HTMLForm form(req);
+        cout << "HTML FORM DATA " << endl;
+        NameValueCollection::ConstIterator c = form.begin();
+        string name2;
+        string value2;
+        while( c != (form.end()++)){
+            name2 = c-> first;
+            value2 = c->second;
+            cout << name2 << " = " << value2 << endl << flush;
+            ++c;
+        }
+        
+        try{
+            connection C("dbname=DropCop user=mo password=cop hostaddr=127.0.0.1 port=5432");
+            if (C.is_open()) {
+                cout << "Opened database successfully: " << endl;
+            } 
+            else {
+                cout << "Can't open database" << endl;
+                out.flush();
+                return;
+            }
+            
+                /* Create SQL statement */
+                string rsql = "INSERT INTO deals (username,name,details, price, link, likes) VALUES ('" +form["username"]+ "','" +form["name"]+ "','" +form["details"]+ "','" +form["price"]+"','" +form["link"]+"', 1);";
+                cout << rsql << endl;
+                /* Create a transactional object */
+                work W(C);
+
+                /* Execute SQL query */
+                W.exec(rsql);
+                W.commit();
+                cout << "Deal Added Confirmed" << endl;
+                out << "{\"dealAdded\":\"true\"}";
+             
+              
+            C.disconnect();
+            out.flush();
+        }
+         catch (const std::exception &e){   
+            //wrong something is not found -- wrong data request 
+            cerr << e.what() << std::endl;
+            out << "{\"dealAdded\":\"error\"}";
+            cout << "Add Deal Exception" << endl;
+            out.flush();
+            return;
+        }
+        out.flush();
+        cout << "AddDealHandler END" << endl;
+        return;
+    }
+
+private:    
+};
+
+class GetOrdersHandler: public HTTPRequestHandler{
+public:
+    virtual void handleRequest(HTTPServerRequest &req, HTTPServerResponse &resp ){
+        // response header
+        resp.set("Access-Control-Allow-Origin", "*");
+        resp.setStatus(HTTPResponse::HTTP_OK);
+        resp.setContentType("text/json");
+        // open stream to write response
+        ostream& out = resp.send();
+        HTMLForm form(req);
+        
+        try{
+            connection C("dbname=DropCop user=mo password=cop hostaddr=127.0.0.1 port=5432");
+            if (C.is_open()) {
+                cout << "Opened database successfully: " << C.dbname() << endl;
+            } 
+            else {
+                cout << "Can't open database" << endl;
+                out.flush();
+                return;
+            }
+            /* Create SQL statement */
+            string sql = "SELECT * from orders where username = '" + form["username"] + "';";
+            /* Create a non-transactional object. */
+            nontransaction N(C);
+            /* Execute SQL query */
+            result R( N.exec( sql ));
+            cout << "RCAP: " << R.capacity() << endl;
+            /* List down all the records */
+            out << "[";
+            for (result::const_iterator c = R.begin(); c != R.end(); ++c) {
+            //result::const_iterator c = R.begin();
+                //send item data 
+                out << "{\"name\":\"" + c[1].as<string>() + "\","
+                + "\"oid\":\"" + c[12].as<string>() +  "\"}";
+            
+                if(c != --R.end()){
+                    out << ",";
+                }
+            }
+            out << "]";
+            out.flush();
+            cout << "Orders Data sent successfully" << endl;
+            C.disconnect();
+            return;
+        }
+        catch(const std::exception &e){
+            //wrong something is not found -- wrong data request 
+            cerr << e.what() << std::endl;
+            out << "{\"getOrders\":\"error\"}";
+            cout << "Get Orders Exception" << endl;
+            out.flush();
+            return;
+        }
+        out.flush();
+        cout << "GetOrdersHandler End" << endl;
+        return;
+    }
+private:  
+};
+
 // Request handler factory to correctly pick which handler to call depending on app
 class MyRequestHandlerFactory : public HTTPRequestHandlerFactory
 {
 public:
   virtual HTTPRequestHandler* createRequestHandler(const HTTPServerRequest & request)
   {
-      cout << request.getURI()<< endl;
+      cout << "\nURI: " << request.getURI()<< endl;
       cout << "Request Handler Factory Started" << endl;
       // Beginning of URI signals which handler to call
       // SHOULD BE THE GET URI METHOD -- CHANGE THIS SECTION
       if ( request.getURI().substr(0,6) == "/login") {
-          cout << "LoginHandler" << endl;
+          cout << "LoginHandler has been engaged." << endl;
           return new LoginHandler();
       }
       else if( request.getURI().substr(0,9) == "/register"){
-          cout << "RegistrationHandler" << endl;
+          cout << "RegistrationHandler has been engaged." << endl;
           return new RegistrationHandler();
+      }
+      else if( request.getURI().substr(0,4) == "/buy"){
+          cout << "BuyHandler has been engaged." << endl;
+          return new BuyHandler();
+      }
+      else if( request.getURI().substr(0,8) == "/confirm"){
+          cout << "OrderHandler has been engaged." << endl;
+          return new OrderHandler();
+      }
+      else if( request.getURI().substr(0,5) == "/deal"){
+          cout << "DealHandler has been engaged." << endl;
+          return new DealHandler();
+      }
+      else if( request.getURI().substr(0,8) == "/addLike"){
+          cout << "LikeHandler has been engaged." << endl;
+          return new LikeHandler();
+      }
+      else if( request.getURI().substr(0,8) == "/addDeal"){
+          cout << "AddDealHandler has been engaged." << endl;
+          return new AddDealHandler();
+      }
+      else if( request.getURI().substr(0,10) == "/getOrders"){
+          cout << "GetOrdersHandler has been engaged." << endl;
+          return new GetOrdersHandler();
       }
       else {
           return new ExceptionHandler();
