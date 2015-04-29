@@ -554,6 +554,67 @@ public:
 private:    
 };
 
+class GetOrdersHandler: public HTTPRequestHandler{
+public:
+    virtual void handleRequest(HTTPServerRequest &req, HTTPServerResponse &resp ){
+        // response header
+        resp.set("Access-Control-Allow-Origin", "*");
+        resp.setStatus(HTTPResponse::HTTP_OK);
+        resp.setContentType("text/json");
+        // open stream to write response
+        ostream& out = resp.send();
+        HTMLForm form(req);
+        
+        try{
+            connection C("dbname=DropCop user=mo password=cop hostaddr=127.0.0.1 port=5432");
+            if (C.is_open()) {
+                cout << "Opened database successfully: " << C.dbname() << endl;
+            } 
+            else {
+                cout << "Can't open database" << endl;
+                out.flush();
+                return;
+            }
+            /* Create SQL statement */
+            string sql = "SELECT * from orders where username = '" + form["username"] + "';";
+            /* Create a non-transactional object. */
+            nontransaction N(C);
+            /* Execute SQL query */
+            result R( N.exec( sql ));
+            cout << "RCAP: " << R.capacity() << endl;
+            /* List down all the records */
+            out << "[";
+            for (result::const_iterator c = R.begin(); c != R.end(); ++c) {
+            //result::const_iterator c = R.begin();
+                //send item data 
+                out << "{\"name\":\"" + c[1].as<string>() + "\","
+                + "\"oid\":\"" + c[12].as<string>() +  "\"}";
+            
+                if(c != --R.end()){
+                    out << ",";
+                }
+            }
+            out << "]";
+            out.flush();
+            cout << "Orders Data sent successfully" << endl;
+            C.disconnect();
+            return;
+        }
+        catch(const std::exception &e){
+            //wrong something is not found -- wrong data request 
+            cerr << e.what() << std::endl;
+            out << "{\"getOrders\":\"error\"}";
+            cout << "Get Orders Exception" << endl;
+            out.flush();
+            return;
+        }
+        out.flush();
+        cout << "GetOrdersHandler End" << endl;
+        return;
+    }
+private:  
+};
+
 // Request handler factory to correctly pick which handler to call depending on app
 class MyRequestHandlerFactory : public HTTPRequestHandlerFactory
 {
@@ -591,6 +652,10 @@ public:
       else if( request.getURI().substr(0,8) == "/addDeal"){
           cout << "AddDealHandler has been engaged." << endl;
           return new AddDealHandler();
+      }
+      else if( request.getURI().substr(0,10) == "/getOrders"){
+          cout << "GetOrdersHandler has been engaged." << endl;
+          return new GetOrdersHandler();
       }
       else {
           return new ExceptionHandler();
