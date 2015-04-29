@@ -104,10 +104,6 @@ class CopPage: UIViewController, UITextFieldDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        confirmButton.layer.backgroundColor = UIColor.darkGrayColor().CGColor
-        confirmButton.layer.borderColor = UIColor.blackColor().CGColor
-        confirmButton.layer.borderWidth = 0.3
-        // Do any additional setup after loading the view.
     }
 
     override func didReceiveMemoryWarning() {

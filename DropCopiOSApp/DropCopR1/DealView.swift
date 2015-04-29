@@ -35,7 +35,7 @@ class DealView: UIViewController, UITableViewDataSource, UITableViewDelegate{
                         }
                     }
                 }
-                self.droptable.reloadData()
+                dispatch_async(dispatch_get_main_queue(), {self.droptable.reloadData()})
                 for stuff in self.drop{ println("DROP:\(stuff.name)")}
                 return
                 
@@ -51,7 +51,14 @@ class DealView: UIViewController, UITableViewDataSource, UITableViewDelegate{
     
     @IBOutlet weak var dropBar: UINavigationBar!
     
-    @IBOutlet weak var rightbut: UIBarButtonItem!
+    
+    @IBAction func freshView(sender: AnyObject) {
+        dispatch_async(dispatch_get_main_queue(),{
+        self.drop.removeAll(keepCapacity: false)
+        self.dropLoader()
+        println("Data has been refreshed")
+        })
+    }
     
     var drop = [DropItems]()
     // Catch username
@@ -81,23 +88,11 @@ class DealView: UIViewController, UITableViewDataSource, UITableViewDelegate{
         return cell2
     }
 
-    func refresherr(sender: AnyObject) {
-        drop.removeAll(keepCapacity: false)
-        dispatch_async(dispatch_get_main_queue(), {self.dropLoader()})
-        println("Data has been refreshed")
-    }
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
         dispatch_async(dispatch_get_main_queue(), {self.dropLoader()})
-        self.droptable.reloadData()
-        // Do any additional setup after loading the view.
-        
-        //configure right button bar item
-        let refr = UIImage(named: "refresh")
-        let backb = UIBarButtonItem(image: refr, style: UIBarButtonItemStyle.Bordered, target: self, action: "refresherr:")
-        backb.tintColor = UIColor.lightTextColor()
-        rightbut = backb
         
     }
     
@@ -117,6 +112,10 @@ class DealView: UIViewController, UITableViewDataSource, UITableViewDelegate{
                 let selectedItem = drop[indexPath.row]
                 linkerView.link = selectedItem.link
             }
+        }
+        if(segue.identifier == "dealadder"){
+            var adderView = segue.destinationViewController as DealAdder
+            adderView.user = username
         }
     }
 

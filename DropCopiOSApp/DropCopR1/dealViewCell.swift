@@ -36,11 +36,7 @@ class dealViewCell: UITableViewCell {
                 if let reg = response.responseObject as? NSDictionary{
                     var liked = reg["addedLike"] as String
                     if( liked == "true"){
-                        if let intdff = self.likerLabel.text?.toInt(){
-                            var vare: Int = intdff + 1
-                            self.likerLabel.text = String(vare)
-                            self.cellLoader.reloadInputViews()
-                        }
+                        println("Added LIKE!")
                     }
                 }
             },

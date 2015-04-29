@@ -86,20 +86,16 @@ class CopView: UITableViewController{
         }
     }*/
     
+    @IBOutlet weak var menuButton: UIBarButtonItem!
     @IBOutlet weak var navbarr: UINavigationItem!
     
     override func viewDidLoad() {
-        self.navigationController?.navigationBar.barStyle = UIBarStyle.BlackTranslucent
+        self.navigationController?.navigationBar.barTintColor = UIColor.lightTextColor()
         super.viewDidLoad()
         dispatch_async(dispatch_get_main_queue(), {self.copLoader()})
         println("This is cop:\(cop)")
         println("This is current user:\(currentUser)")
         
-        //configure right button bar item
-        let refr = UIImage(named: "refresh")
-        let backb = UIBarButtonItem(image: refr, style: UIBarButtonItemStyle.Bordered, target: self, action: "refresheree:")
-        backb.tintColor = UIColor.lightTextColor()
-        navbarr.rightBarButtonItem = backb
         
     }
     
