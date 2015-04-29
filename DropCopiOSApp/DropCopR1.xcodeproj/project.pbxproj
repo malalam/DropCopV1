@@ -10,6 +10,8 @@
 		500BC50D1AF09779009F2A30 /* mainmenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 500BC50C1AF09779009F2A30 /* mainmenu.swift */; };
 		500BC50F1AF0A6DA009F2A30 /* DealView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 500BC50E1AF0A6DA009F2A30 /* DealView.swift */; };
 		500BC5111AF0A861009F2A30 /* dealViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 500BC5101AF0A861009F2A30 /* dealViewCell.swift */; };
+		501E5E541AF101C800DB9060 /* OrdersView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 501E5E531AF101C800DB9060 /* OrdersView.swift */; };
+		501E5E561AF1029100DB9060 /* orderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 501E5E551AF1029100DB9060 /* orderCell.swift */; };
 		5022DFEB1ACF4537008A2364 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5022DFEA1ACF4537008A2364 /* AppDelegate.swift */; };
 		5022DFF21ACF4537008A2364 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5022DFF11ACF4537008A2364 /* Images.xcassets */; };
 		5022DFF51ACF4537008A2364 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5022DFF31ACF4537008A2364 /* LaunchScreen.xib */; };
@@ -44,6 +46,8 @@
 		500BC50C1AF09779009F2A30 /* mainmenu.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = mainmenu.swift; sourceTree = "<group>"; };
 		500BC50E1AF0A6DA009F2A30 /* DealView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DealView.swift; sourceTree = "<group>"; };
 		500BC5101AF0A861009F2A30 /* dealViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = dealViewCell.swift; sourceTree = "<group>"; };
+		501E5E531AF101C800DB9060 /* OrdersView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OrdersView.swift; sourceTree = "<group>"; };
+		501E5E551AF1029100DB9060 /* orderCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = orderCell.swift; sourceTree = "<group>"; };
 		5022DFE51ACF4537008A2364 /* DropCopR1.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DropCopR1.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5022DFE91ACF4537008A2364 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5022DFEA1ACF4537008A2364 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -141,6 +145,8 @@
 				502FE01E1ADDA9DE00342CC8 /* Notes.txt */,
 				50B672441AF0D8E90035352C /* LinkView.swift */,
 				50B672461AF0E0840035352C /* DealAdder.swift */,
+				501E5E531AF101C800DB9060 /* OrdersView.swift */,
+				501E5E551AF1029100DB9060 /* orderCell.swift */,
 			);
 			path = DropCopR1;
 			sourceTree = "<group>";
@@ -336,6 +342,8 @@
 				50681F5C1AD0AD260029F0AE /* RegistrationView.swift in Sources */,
 				500BC50D1AF09779009F2A30 /* mainmenu.swift in Sources */,
 				506F48BB1AED7EB400517B4C /* itemView.swift in Sources */,
+				501E5E541AF101C800DB9060 /* OrdersView.swift in Sources */,
+				501E5E561AF1029100DB9060 /* orderCell.swift in Sources */,
 				508AF15F1AE4368400701ECC /* CopItems.swift in Sources */,
 				50B672471AF0E0840035352C /* DealAdder.swift in Sources */,
 				500BC50F1AF0A6DA009F2A30 /* DealView.swift in Sources */,

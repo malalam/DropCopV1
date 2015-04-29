@@ -60,6 +60,11 @@ class mainmenu: UIViewController {
             let dropScene = segue.destinationViewController as DealView
             dropScene.username = crrUser
         }
+        // Orders
+        if(segue.identifier == "goOrders"){
+            let orderScene = segue.destinationViewController as OrdersView
+            orderScene.user = crrUser
+        }
         
     }
     

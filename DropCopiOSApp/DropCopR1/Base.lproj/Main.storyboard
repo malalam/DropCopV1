@@ -7,6 +7,111 @@
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
+        <!--Orders View-->
+        <scene sceneID="erK-Bb-yFF">
+            <objects>
+                <viewController id="gp1-no-pZN" customClass="OrdersView" customModule="DropCopR1" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="mcf-HB-RAb"/>
+                        <viewControllerLayoutGuide type="bottom" id="OVv-ZE-CR5"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="BWN-Yk-MkU">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="LBt-WO-6eH">
+                                <rect key="frame" x="0.0" y="28" width="600" height="44"/>
+                                <color key="barTintColor" red="0.0" green="0.25098040700000002" blue="0.50196081400000003" alpha="0.93000000000000005" colorSpace="calibratedRGB"/>
+                                <items>
+                                    <navigationItem id="NLx-zq-h0U">
+                                        <barButtonItem key="rightBarButtonItem" title="Back" id="HLq-kz-k0H">
+                                            <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                            <connections>
+                                                <action selector="dismissBack:" destination="gp1-no-pZN" id="vhj-Gz-aYc"/>
+                                            </connections>
+                                        </barButtonItem>
+                                    </navigationItem>
+                                </items>
+                            </navigationBar>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="90" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="ZlX-xv-0sV">
+                                <rect key="frame" x="0.0" y="72" width="600" height="528"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <prototypes>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="orderceller" rowHeight="90" id="4sr-LS-djp" customClass="orderCell" customModule="DropCopR1" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="0.0" width="600" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="4sr-LS-djp" id="Py2-7P-Xmt">
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ID" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="epZ-T1-EfL">
+                                                    <rect key="frame" x="8" y="8" width="584" height="28"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="28" id="8lg-Sa-ta3"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" name="DINAlternate-Bold" family="DIN Alternate" pointSize="22"/>
+                                                    <color key="textColor" red="0.0" green="0.25098040700000002" blue="0.50196081400000003" alpha="0.93000000000000005" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Name" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eKD-Vv-6TR">
+                                                    <rect key="frame" x="8" y="44" width="584" height="28"/>
+                                                    <fontDescription key="fontDescription" name="DINAlternate-Bold" family="DIN Alternate" pointSize="18"/>
+                                                    <color key="textColor" red="0.0" green="0.25098040700000002" blue="0.50196081400000003" alpha="0.93000000000000005" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="epZ-T1-EfL" firstAttribute="top" secondItem="Py2-7P-Xmt" secondAttribute="topMargin" id="3mz-wd-rUb"/>
+                                                <constraint firstItem="eKD-Vv-6TR" firstAttribute="top" secondItem="epZ-T1-EfL" secondAttribute="bottom" constant="8" symbolic="YES" id="HGA-Zs-iDy"/>
+                                                <constraint firstItem="eKD-Vv-6TR" firstAttribute="leading" secondItem="Py2-7P-Xmt" secondAttribute="leadingMargin" id="QCe-P2-sVm"/>
+                                                <constraint firstItem="epZ-T1-EfL" firstAttribute="trailing" secondItem="eKD-Vv-6TR" secondAttribute="trailing" id="haR-ut-Ehu"/>
+                                                <constraint firstItem="eKD-Vv-6TR" firstAttribute="trailing" secondItem="Py2-7P-Xmt" secondAttribute="trailingMargin" id="jqo-aV-zFc"/>
+                                                <constraint firstAttribute="bottomMargin" secondItem="eKD-Vv-6TR" secondAttribute="bottom" constant="9" id="tno-9F-8T6"/>
+                                                <constraint firstItem="eKD-Vv-6TR" firstAttribute="leading" secondItem="epZ-T1-EfL" secondAttribute="leading" id="vSY-Jc-a7F"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="namerLabelo" destination="eKD-Vv-6TR" id="GDt-Og-ALo"/>
+                                            <outlet property="orderIDLabel" destination="epZ-T1-EfL" id="829-xH-zM2"/>
+                                        </connections>
+                                    </tableViewCell>
+                                </prototypes>
+                                <connections>
+                                    <outlet property="dataSource" destination="gp1-no-pZN" id="XxA-Ng-2ba"/>
+                                    <outlet property="delegate" destination="gp1-no-pZN" id="Er0-04-5AM"/>
+                                </connections>
+                            </tableView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Your Orders" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jHt-Y4-6So">
+                                <rect key="frame" x="241" y="28" width="119" height="44"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="119" id="4S1-uy-li0"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="DINAlternate-Bold" family="DIN Alternate" pointSize="22"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="LBt-WO-6eH" firstAttribute="top" secondItem="mcf-HB-RAb" secondAttribute="bottom" constant="8" id="6RZ-oL-YI3"/>
+                            <constraint firstItem="jHt-Y4-6So" firstAttribute="centerX" secondItem="LBt-WO-6eH" secondAttribute="centerX" id="74q-Qw-R7i"/>
+                            <constraint firstItem="jHt-Y4-6So" firstAttribute="bottom" secondItem="LBt-WO-6eH" secondAttribute="bottom" id="Dkn-L3-l3s"/>
+                            <constraint firstItem="ZlX-xv-0sV" firstAttribute="leading" secondItem="LBt-WO-6eH" secondAttribute="leading" id="GdG-16-2cm"/>
+                            <constraint firstItem="ZlX-xv-0sV" firstAttribute="bottom" secondItem="OVv-ZE-CR5" secondAttribute="top" id="HOR-pp-rAB"/>
+                            <constraint firstItem="ZlX-xv-0sV" firstAttribute="top" secondItem="LBt-WO-6eH" secondAttribute="bottom" id="HyN-cF-7Zq"/>
+                            <constraint firstItem="LBt-WO-6eH" firstAttribute="leading" secondItem="BWN-Yk-MkU" secondAttribute="leading" id="OW5-ls-Icx"/>
+                            <constraint firstItem="jHt-Y4-6So" firstAttribute="top" secondItem="LBt-WO-6eH" secondAttribute="top" id="haA-xt-dtG"/>
+                            <constraint firstItem="ZlX-xv-0sV" firstAttribute="trailing" secondItem="LBt-WO-6eH" secondAttribute="trailing" id="i0u-Nd-JyY"/>
+                            <constraint firstAttribute="trailing" secondItem="LBt-WO-6eH" secondAttribute="trailing" id="jpW-Rf-h1Q"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="orderTabler" destination="ZlX-xv-0sV" id="42J-q9-FkX"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="GUc-FB-UcK" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="345" y="-189"/>
+        </scene>
         <!--Login View-->
         <scene sceneID="oTn-9a-UsF">
             <objects>
@@ -658,10 +763,13 @@
                                     <constraint firstAttribute="width" constant="70" id="d1S-Tw-nfW"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" name="DINAlternate-Bold" family="DIN Alternate" pointSize="16"/>
-                                <state key="normal" title="Hi!">
+                                <state key="normal" title="Orders">
                                     <color key="titleColor" red="0.0" green="0.25098040700000002" blue="0.50196081400000003" alpha="0.93000000000000005" colorSpace="calibratedRGB"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <connections>
+                                    <segue destination="gp1-no-pZN" kind="presentation" identifier="goOrders" modalPresentationStyle="fullScreen" modalTransitionStyle="coverVertical" id="cP2-9g-b34"/>
+                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
