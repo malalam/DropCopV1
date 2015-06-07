@@ -15,6 +15,6 @@
 - May need to configure network connection settings. 
 
 ##Database files located in DropCopDatabase Directory
-- Contains a dump of sample data.
+- Contains a sql dump of sample data.
 
 
