@@ -19,3 +19,5 @@
 - Contains a sql dump of sample data.
 
 
+###[Screenshots](https://imgur.com/a/CGTIm)
+
