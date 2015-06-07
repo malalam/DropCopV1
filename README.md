@@ -15,6 +15,7 @@
 - May need to configure network connection settings. 
 
 ##Database files located in DropCopDatabase Directory
+- Database was built on PostgresSQL
 - Contains a sql dump of sample data.
 
 
